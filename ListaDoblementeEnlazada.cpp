@@ -56,45 +56,62 @@ void addInicio(Node*& head, int x) {
 
 Node* buscar(Node* head, int d) {
     Node* temp1 = head;
-        while (temp1 != nullptr ) {
-            if (temp1->dato == d) {
-                return temp1;
-            }
+        do {
             temp1 = temp1->next;
-        }
+        } while (temp1->dato != d && temp1 != nullptr);
+        return temp1;
 }
 
 void agregarAntDesp(Node* head, int numIngre, int despAntes , char x) {
 
-    Node* newnode = new Node;
-    newnode->dato = numIngre;
-    newnode->next = nullptr;
-    newnode->prev = nullptr;
-
+    // 1 = despues
     if (x == 1) {
         Node* temp1 = buscar(head, despAntes);
         Node* temp2 = temp1->next;
 
-        temp1->next = newnode;
-        newnode->prev = temp1;
+        if (temp1->next == nullptr) {
+            addEnd(temp1, numIngre);
+        }
+        else {
+            Node* newnode = new Node;
+            newnode->dato = numIngre;
+            newnode->next = nullptr;
+            newnode->prev = nullptr;
 
-        newnode->next = temp2;
-        temp2->prev = newnode;
+            temp1->next = newnode;
+            newnode->prev = temp1;
+
+            newnode->next = temp2;
+            temp2->prev = newnode;
+        }
     }
     else {
         Node* temp1 = buscar(head, despAntes);
         Node* temp2 = temp1->prev;
 
-        temp1->next = newnode;
-        newnode->prev = temp1;
+        if (temp1->next == nullptr) {
+            addEnd(temp1, numIngre);
+        }
+        else {
+            Node* newnode = new Node;
+            newnode->dato = numIngre;
+            newnode->next = nullptr;
+            newnode->prev = nullptr;
 
-        newnode->next = temp2;
-        temp2->prev = newnode;
+            temp1->next = newnode;
+            newnode->prev = temp1;
+
+            newnode->next = temp2;
+            temp2->prev = newnode;
+        }
     }
 
 }
+
 void eliminarNumero(Node*& head) {
+
     int op;
+
     do {
         cout << "1. Eliminar primer numero";
         cout << "2. Eliminar x numero";
@@ -104,7 +121,7 @@ void eliminarNumero(Node*& head) {
 
         switch (op) {
         case 1:
-            Node * temp1 = head;
+            Node* temp1 = head;
             Node* temp2 = head->next;
 
             temp1->next = nullptr;
@@ -115,7 +132,7 @@ void eliminarNumero(Node*& head) {
             delete temp1;
             break;
 
-        case 2:
+        case 2 :
             int x;
             cout << "Ingrese el numero a eliminar: "; cin >> x;
 
@@ -147,28 +164,29 @@ void eliminarNumero(Node*& head) {
             break;
         }
     } while (op != 4);
+
 }
 
 
-void eliminarTodo(Node*& head) {
+/*void eliminarTodo(Node*& head) {
 
 }
 
 void editarNumero(Node*& head) {
 
-}
+}*/
 
-int main()  {
+int main() {
 
     int n, m, o;
-	Node* head = nullptr;
-	cout << "Ingrese el n de la lista: "; cin >> n;
-	cout << endl;
+    Node* head = nullptr;
+    cout << "Ingrese el n de la lista: "; cin >> n;
+    cout << endl;
 
-	for (int i = 0; i < n; i++) {
-		cout << "Ingrese el " << i + 1 << " dato: "; cin >> m;
-		addEnd(head, m);
-	}
+    for (int i = 0; i < n; i++) {
+        cout << "Ingrese el " << i + 1 << " dato: "; cin >> m;
+        addEnd(head, m);
+    }
 
     system("cls");
     do {
@@ -241,7 +259,7 @@ int main()  {
 
         case 6:
             system("cls");
-            eliminarNumero(head);
+            //eliminarNumero(head);
             break;
 
         case 7:
@@ -260,6 +278,6 @@ int main()  {
             break;
         }
     } while (o != 9);
-
-
 }
+
+
