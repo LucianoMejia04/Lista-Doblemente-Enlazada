@@ -109,62 +109,97 @@ void agregarAntDesp(Node* head, int numIngre, int despAntes , char x) {
 }
 
 void eliminarNumero(Node*& head) {
-
     int op;
 
     do {
-        cout << "1. Eliminar primer numero";
-        cout << "2. Eliminar x numero";
-        cout << "3. Eliminar ultimo numero";
-        cout << "4. Salir";
+        cout << "1. Eliminar primer número\n";
+        cout << "2. Eliminar un número específico\n";
+        cout << "3. Eliminar último número\n";
+        cout << "4. Salir\n";
+        cout << "Ingrese una opción: ";
         cin >> op;
 
         switch (op) {
-        case 1:
+        case 1: {
+            if (head == nullptr) {
+                cout << "La lista está vacía." << endl;
+                break;
+            }
+
             Node* temp1 = head;
-            Node* temp2 = head->next;
+            head = head->next;
 
-            temp1->next = nullptr;
-            temp2->prev = nullptr;
-
-            head = temp2;
+            if (head != nullptr) {
+                head->prev = nullptr;
+            }
 
             delete temp1;
+            cout << "Primer número eliminado." << endl;
             break;
+        }
 
-        case 2 :
+        case 2: {
             int x;
-            cout << "Ingrese el numero a eliminar: "; cin >> x;
+            cout << "Ingrese el número a eliminar: ";
+            cin >> x;
 
             Node* temp3 = buscar(head, x);
-            temp3->prev->next = temp3->next;
-            temp3->next->prev = temp3->prev;
-            temp3->next = nullptr;
-            temp3->prev = nullptr;
+
+            if (temp3 == nullptr) {
+                cout << "Número no encontrado." << endl;
+                break;
+            }
+
+            if (temp3->prev != nullptr) {
+                temp3->prev->next = temp3->next;
+            }
+            else {
+                head = temp3->next;
+            }
+
+            if (temp3->next != nullptr) {
+                temp3->next->prev = temp3->prev;
+            }
 
             delete temp3;
+            cout << "Número eliminado." << endl;
             break;
+        }
 
-        case 3:
-            Node * temp4 = head;
-            while (temp4 != nullptr) {
+        case 3: {
+            if (head == nullptr) {
+                cout << "La lista está vacía." << endl;
+                break;
+            }
+
+            Node* temp4 = head;
+
+            while (temp4->next != nullptr) {
                 temp4 = temp4->next;
             }
 
-            temp4->prev->next = nullptr;
-            temp4->prev = nullptr;
+            if (temp4->prev != nullptr) {
+                temp4->prev->next = nullptr;
+            }
+            else {
+                head = nullptr;
+            }
 
             delete temp4;
+            cout << "Último número eliminado." << endl;
+            break;
+        }
 
+        case 4:
+            cout << "Saliendo del programa..." << endl;
             break;
 
         default:
-            cout << "Opcion no validad intente denuevo" << endl;
-            system("pause");
+            cout << "Opción no válida, intente de nuevo." << endl;
             break;
         }
-    } while (op != 4);
 
+    } while (op != 4);
 }
 
 
@@ -279,5 +314,3 @@ int main() {
         }
     } while (o != 9);
 }
-
-
