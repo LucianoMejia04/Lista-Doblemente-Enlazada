@@ -33,7 +33,7 @@ void addEnd(Node*& head, int valor) {
 void imprimirList(Node*& head) {
 	Node* temp1 = head;
 	while (temp1 != nullptr) {
-		cout << temp1->dato;
+		cout << temp1->dato<<" ";
 		temp1 = temp1->next;
 	}
 
